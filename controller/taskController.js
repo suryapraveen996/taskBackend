@@ -39,3 +39,23 @@ exports.deleteTask = async(req,res) => {
   const updateTask = await Task.findByIdAndDelete(req.params.id);
   res.json("delete task by id")
 }
+
+exports.dashboard=async(req,res)=>{
+
+  const total=await Task.countDocuments();
+
+  const completed=await Task.countDocuments({
+      status:"Completed"
+  });
+
+  const pending=await Task.countDocuments({
+      status:"Pending"
+  });
+
+  res.json({
+      total,
+      completed,
+      pending
+  });
+
+};
